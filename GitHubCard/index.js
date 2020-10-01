@@ -3,6 +3,16 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+axios.get('https://api.github.com/users/intent-ly')
+  .then(dat =>{
+    console.log(dat)
+    console.log(dat.data)
+  })
+  .catch(non =>{
+    console.log(non)
+    debugger
+  })
+
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -11,7 +21,7 @@
 
     Skip to STEP 3.
 */
-
+const entryPoint = document.querySelector('.cards');
 /*
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
@@ -49,7 +59,53 @@ const followersArray = [];
       </div>
     </div>
 */
+function card (data){
+  //Declaring Elements
+  const profileCard = document.createElement('div')
+  const profileImage = document.createElement('img')
+  const profileInfoCard = document.createElement('div')
+  const profileName = document.createElement('h3')
+  const profileUsername =document.createElement('p')
+  const profileLocation =document.createElement('p')
+  const profileProfile =document.createElement('p')
+  const profileAnchor =document.createElement('a')
+  const profileFollowers =document.createElement('p')
+  const profileFollowing =document.createElement('p')
+  const profileBio =document.createElement('p')
 
+  //Filling content
+  profileImage.setAttribute('src', data.avatar_url)
+  profileName.textContent = `${data.name}`
+  profileUsername.textContent = `${data.login}`
+  profileLocation.textContent =`${data.location}`
+  profileFollowers.textContent =`${data.followers}`
+  profileFollowing.textContent =`${data.following}`
+  profileBio.textContent =`${data.bio}`
+
+  profileAnchor.setAttribute('href', data.html_url)
+  profileAnchor.textContent = `${data.html_url}`
+
+  profileCard.classList.add('card')
+  profileInfoCard.classList.add('card-info')
+  profileName.classList.add('name')
+  profileUsername.classList.add('username')
+
+  //Organizing card
+  profileCard.appendChild(profileImage)
+  profileCard.appendChild(profileInfoCard)
+
+  profileInfoCard.appendChild(profileName)
+  profileInfoCard.appendChild(profileUsername)
+  profileInfoCard.appendChild(profileLocation)
+  profileInfoCard.appendChild(profileProfile)
+  profileProfile.appendChild(profileAnchor)
+  profileInfoCard.appendChild(profileFollowers)
+  profileInfoCard.appendChild(profileFollowing)
+  profileInfoCard.appendChild(profileBio)
+
+  //Returning DOM card
+  return profileCard
+}
 /*
   List of LS Instructors Github username's:
     tetondan
